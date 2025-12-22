@@ -136,7 +136,6 @@ public class EnemyFieldOfView : MonoBehaviour
             }
         }
         
-        /
         if (wasInFOV && showDebugLogs)
         {
             Debug.Log($"{gameObject.name}: Player left FOV");
