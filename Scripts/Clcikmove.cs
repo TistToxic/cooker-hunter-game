@@ -14,6 +14,7 @@ public class PointClickMove : MonoBehaviour
     private NavMeshAgent agent;
     private Camera mainCam;
 
+//SCRIPT ONLY FOR TESTING AI NAV
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -37,11 +38,11 @@ public class PointClickMove : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, clickLayers))
         {
-            // Check tag
+
             if (!hit.collider.CompareTag(groundTag))
                 return;
 
-            // Optional: ensure point is on NavMesh
+           
             if (NavMesh.SamplePosition(hit.point, out NavMeshHit navHit, 1.0f, NavMesh.AllAreas))
             {
                 agent.SetDestination(navHit.position);

@@ -8,13 +8,13 @@ public class EnemyFieldOfView : MonoBehaviour
     [Range(0f, 360f)]
     public float viewAngle = 90f;
     public float viewRadius = 10f;
-    public LayerMask targetMask; // Set to player layer
-    public LayerMask obstructionMask; // Set to walls/obstacles
+    public LayerMask targetMask; 
+    public LayerMask obstructionMask; 
     
     [Header("Detection Settings")]
     public string playerTag = "Player";
     public float detectionDelay = 0.1f;
-    public float raycastHeightOffset = 0.5f; // Height from ground to cast ray
+    public float raycastHeightOffset = 0.5f; 
     
     [Header("Behavior")]
     public bool chaseWhenDetected = true;
@@ -24,7 +24,7 @@ public class EnemyFieldOfView : MonoBehaviour
     public bool showDebugLogs = false;
     public bool showDebugGizmos = true;
     
-    // Public properties
+
     public bool PlayerInFOV { get; private set; }
     public Transform CurrentTarget { get; private set; }
     
@@ -36,18 +36,18 @@ public class EnemyFieldOfView : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         PlayerInFOV = false;
-        lastSeenTime = -loseTargetTime; // Initialize to allow immediate detection
+        lastSeenTime = -loseTargetTime; 
         StartCoroutine(FOVRoutine());
     }
     
     void Update()
     {
-        // Only chase if player is CURRENTLY in FOV (can see them now)
+        
         if (PlayerInFOV && chaseWhenDetected && CurrentTarget != null && agent != null)
         {
             agent.SetDestination(CurrentTarget.position);
         }
-        // Handle losing target after time
+        
         else if (!PlayerInFOV && CurrentTarget != null)
         {
             if (Time.time - lastSeenTime > loseTargetTime)
@@ -55,7 +55,7 @@ public class EnemyFieldOfView : MonoBehaviour
                 if (showDebugLogs) Debug.Log($"{gameObject.name}: Lost target after {loseTargetTime}s");
                 CurrentTarget = null;
                 
-                // Stop chasing
+                
                 if (agent != null && chaseWhenDetected)
                 {
                     agent.ResetPath();
@@ -63,7 +63,7 @@ public class EnemyFieldOfView : MonoBehaviour
             }
             else if (chaseWhenDetected && agent != null)
             {
-                // Continue moving to last known position
+               
                 agent.SetDestination(CurrentTarget.position);
             }
         }
@@ -94,30 +94,29 @@ public class EnemyFieldOfView : MonoBehaviour
             Transform target = col.transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
             
-            // Use the enemy's forward direction (based on rotation)
-            // This makes the FOV cone point in the direction the enemy is facing
+            
             float angleToTarget = Vector3.Angle(transform.forward, dirToTarget);
             
             if (angleToTarget < viewAngle / 2f)
             {
                 float distToTarget = Vector3.Distance(transform.position, target.position);
                 
-                // Cast ray from enemy's eye level to player's center
+                
                 Vector3 rayOrigin = transform.position + Vector3.up * raycastHeightOffset;
                 Vector3 targetPoint = target.position + Vector3.up * raycastHeightOffset;
                 Vector3 rayDirection = (targetPoint - rayOrigin).normalized;
                 float rayDistance = Vector3.Distance(rayOrigin, targetPoint);
                 
-                // Debug ray
+                
                 if (showDebugGizmos)
                 {
                     Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red, detectionDelay);
                 }
                 
-                // Check for obstructions - if raycast hits something on obstruction mask, player is blocked
+               
                 if (!Physics.Raycast(rayOrigin, rayDirection, rayDistance, obstructionMask))
                 {
-                    // Player is in FOV and not obstructed!
+                  
                     PlayerInFOV = true;
                     CurrentTarget = target;
                     lastSeenTime = Time.time;
@@ -128,7 +127,7 @@ public class EnemyFieldOfView : MonoBehaviour
                     }
                     
                     wasInFOV = true;
-                    return; // Found player, no need to check others
+                    return; 
                 }
                 else if (showDebugLogs && wasInFOV)
                 {
@@ -137,7 +136,7 @@ public class EnemyFieldOfView : MonoBehaviour
             }
         }
         
-        // Player not in FOV this frame
+        /
         if (wasInFOV && showDebugLogs)
         {
             Debug.Log($"{gameObject.name}: Player left FOV");
@@ -155,7 +154,7 @@ public class EnemyFieldOfView : MonoBehaviour
         return Time.time - lastSeenTime;
     }
     
-    // Visualize FOV in Scene view
+   
     void OnDrawGizmos()
     {
         if (!showDebugGizmos) return;
@@ -169,11 +168,11 @@ public class EnemyFieldOfView : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + viewAngleA * viewRadius);
         Gizmos.DrawLine(transform.position, transform.position + viewAngleB * viewRadius);
         
-        // Draw forward direction
+   
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + transform.forward * viewRadius);
         
-        // Draw line to target if detected
+       
         if (CurrentTarget != null)
         {
             Gizmos.color = PlayerInFOV ? Color.red : Color.yellow;
@@ -184,7 +183,7 @@ public class EnemyFieldOfView : MonoBehaviour
     
     Vector3 GetDirectionFromAngle(float angleInDegrees)
     {
-        // Apply the angle relative to the enemy's forward direction
+    
         return Quaternion.Euler(0, angleInDegrees, 0) * transform.forward;
     }
 }

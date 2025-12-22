@@ -29,12 +29,12 @@ public class AI_Follow : MonoBehaviour
         }
         else if (fov != null && fov.CurrentTarget != null)
         {
-            // Continue to last known position if target was recently lost
+            
             agent.SetDestination(fov.CurrentTarget.position);
         }
         else
         {
-            // No target, stop moving
+            // shut up
             agent.ResetPath();
         }
     }

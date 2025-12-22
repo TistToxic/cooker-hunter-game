@@ -13,7 +13,7 @@ public class PlayerHealthProximity : MonoBehaviour
     public float damageRadius = 2.5f;
     public float timeBeforeDamage = 1.5f;
     public string enemyTag = "Enemy";
-    public float gracePeriod = 0.2f; // Time to wait before considering enemy truly gone
+    public float gracePeriod = 0.2f; 
     
     [Header("UI")]
     public Text healthText;
@@ -41,11 +41,11 @@ public class PlayerHealthProximity : MonoBehaviour
     {
         bool detectedThisFrame = IsEnemyInRange();
         
-        // Handle grace period for NavMesh transitions
+
         if (detectedThisFrame)
         {
             wasDetected = true;
-            graceTimer = gracePeriod; // Reset grace timer
+            graceTimer = gracePeriod; 
         }
         else if (wasDetected)
         {
@@ -53,7 +53,7 @@ public class PlayerHealthProximity : MonoBehaviour
             graceTimer -= Time.deltaTime;
             if (graceTimer > 0)
             {
-                detectedThisFrame = true; // Treat as still detected during grace period
+                detectedThisFrame = true; 
                 if (showDebugLogs) Debug.Log($"Grace period active: {graceTimer:0.00}s remaining");
             }
             else
@@ -77,7 +77,7 @@ public class PlayerHealthProximity : MonoBehaviour
             if (damageTimer >= timeBeforeDamage)
             {
                 TakeDamage(damagePerHit);
-                damageTimer = 0f; // Reset for continuous damage
+                damageTimer = 0f; 
             }
         }
         else
@@ -103,7 +103,7 @@ public class PlayerHealthProximity : MonoBehaviour
         {
             if (hits[i] != null && hits[i].gameObject != null && hits[i].CompareTag(enemyTag))
             {
-                // Extra check: make sure the enemy GameObject is active
+            
                 if (hits[i].gameObject.activeInHierarchy)
                 {
                     enemyCount++;
