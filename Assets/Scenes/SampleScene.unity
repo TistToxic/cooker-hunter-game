@@ -270,9 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   player: {fileID: 1432901394}
-  mouseY: 0
-  rotationY: 0
-  mouseSensitivity: 500
+  mouseSensitivity: 100
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +590,7 @@ Rigidbody:
   m_GameObject: {fileID: 1432901389}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 2
+  m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -720,11 +718,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   rb: {fileID: 1432901390}
   player: {fileID: 1432901394}
-  forceMagnitude: 350
-  JumpMagnitude: 1000
-  netForce: {x: 0, y: 0, z: 0}
-  jumpForce: 0
-  isTouchingFloor: 0
+  health: 100
+  hSpeed: 1000
+  vSpeed: 200
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
