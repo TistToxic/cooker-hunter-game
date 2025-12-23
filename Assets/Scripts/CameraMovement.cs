@@ -3,11 +3,10 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public Transform player;
-    private float mouseY;
-    private float rotationY = 0f;
+    private float mouseY, rotationY = 0f;
 
     [SerializeField]
-    private float mouseSensitivity;
+    private float mouseSensitivity = 300f;
 
     void Start()
     {
