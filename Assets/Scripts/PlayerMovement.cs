@@ -10,8 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float health = 25, hSpeed = 50, vSpeed = 100;
 
     private Vector3 newVelocity = new Vector3(0f, 0f, 0f);
-    private float jumpVelocity, iFrameTime = 1f, iFrameTimer = 0f;
-    private int stamina = 100;
+    private float iFrameTime = 1f, iFrameTimer = 0f, dodgeMultiplier = 1.5f;
     private bool isTouchingFloor = false, isInvincible = false;
 
     // Check if player is touching the floor
@@ -47,9 +46,11 @@ public class PlayerMovement : MonoBehaviour
 
 
         // Get horizontal direction of player
-        newVelocity.x = Convert.ToSingle(Input.GetKey(KeyCode.D)) - Convert.ToSingle(Input.GetKey(KeyCode.A));
-        newVelocity.z = Convert.ToSingle(Input.GetKey(KeyCode.W)) - Convert.ToSingle(Input.GetKey(KeyCode.S));
-        Debug.Log(isInvincible);
+        if (!isInvincible)
+        {
+            newVelocity.x = Convert.ToSingle(Input.GetKey(KeyCode.D)) - Convert.ToSingle(Input.GetKey(KeyCode.A));
+            newVelocity.z = Convert.ToSingle(Input.GetKey(KeyCode.W)) - Convert.ToSingle(Input.GetKey(KeyCode.S));
+        }
 
         // Normalize velocity 
         if (newVelocity.magnitude > 0f)
@@ -60,17 +61,18 @@ public class PlayerMovement : MonoBehaviour
         newVelocity = player.rotation * newVelocity; // Rotate the new velocity 
         
         // Apply horizontal velocity
-        if (isTouchingFloor)
+        if (isTouchingFloor && !isInvincible)
         {
-            if (Input.GetKey(KeyCode.Space) && stamina >= 25) // Dodge
+            // Dodge
+            if (Input.GetKeyDown(KeyCode.Space)) 
             {
+                // Dodge back (without direction)
                 if (newVelocity.magnitude == 0f)
                 {
                     newVelocity = player.rotation * Vector3.back * hSpeed;
                 }
-                newVelocity *= 3f;
+                newVelocity *= dodgeMultiplier;
                 isInvincible = true;
-                stamina -= 25;
             }
             rb.linearVelocity = newVelocity;
         }
