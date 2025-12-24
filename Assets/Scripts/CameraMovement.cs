@@ -4,14 +4,15 @@ public class CameraMovement : MonoBehaviour
 {
     public Transform player, playerHead;
     private float mouseX, mouseY, rotationX, rotationY = 0f;
+    private Vector3 collisionPoint;
 
-    [SerializeField]
-    private float mouseSensitivity = 300f;
+    [SerializeField] private float mouseSensitivity = 300f;
 
     void Start()
     {
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     void Update()

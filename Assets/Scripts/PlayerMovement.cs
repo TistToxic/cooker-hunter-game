@@ -4,6 +4,7 @@ using System;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
+    public Transform cameraTransform;
     [SerializeField] public float health = 25, hSpeed = 50, vSpeed = 100;
 
     private Vector3 newVelocity = new Vector3(0f, 0f, 0f);
@@ -66,12 +67,12 @@ public class PlayerMovement : MonoBehaviour
         if (isTouchingFloor && !isInvincible)
         {
             // Dodge
-            if (Input.GetKeyDown(KeyCode.Space)) 
+            if (Input.GetKey(KeyCode.Space)) 
             {
                 // Dodge back (without direction)
                 if (newVelocity.magnitude == 0f)
                 {
-                    newVelocity = transform.rotation * Vector3.back * hSpeed;
+                    newVelocity = (new Vector3(cameraTransform.position.x, 0, cameraTransform.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized * hSpeed;
                 }
                 newVelocity *= dodgeMultiplier;
                 isInvincible = true;
