@@ -3,11 +3,8 @@ using System;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody rb;
-    public Transform player;
-
-    [SerializeField]
-    public float health = 25, hSpeed = 50, vSpeed = 100;
+    private Rigidbody rb;
+    [SerializeField] public float health = 25, hSpeed = 50, vSpeed = 100;
 
     private Vector3 newVelocity = new Vector3(0f, 0f, 0f);
     private float iFrameTime = 1f, iFrameTimer = 0f, dodgeMultiplier = 1.5f;
@@ -28,6 +25,11 @@ public class PlayerMovement : MonoBehaviour
         {
             isTouchingFloor = false;
         }
+    }
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -58,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
             newVelocity.Normalize();
         }
         newVelocity *= hSpeed;
-        newVelocity = player.rotation * newVelocity; // Rotate the new velocity 
+        newVelocity = transform.rotation * newVelocity; // Rotate the new velocity 
         
         // Apply horizontal velocity
         if (isTouchingFloor && !isInvincible)
@@ -69,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
                 // Dodge back (without direction)
                 if (newVelocity.magnitude == 0f)
                 {
-                    newVelocity = player.rotation * Vector3.back * hSpeed;
+                    newVelocity = transform.rotation * Vector3.back * hSpeed;
                 }
                 newVelocity *= dodgeMultiplier;
                 isInvincible = true;

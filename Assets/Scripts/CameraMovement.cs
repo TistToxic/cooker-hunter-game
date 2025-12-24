@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public Transform player;
-    private float mouseY, rotationY = 0f;
+    public Transform player, playerHead;
+    private float mouseX, mouseY, rotationX, rotationY = 0f;
 
     [SerializeField]
     private float mouseSensitivity = 300f;
@@ -17,10 +17,16 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         // Get mouse movement
+        mouseX = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
         mouseY = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        rotationY += mouseY;
 
-        // Rotate the player capsule
+        // Add to rotation
+        rotationX -= mouseX;
+        rotationY += mouseY;
+        rotationX = Mathf.Clamp(rotationX, -45f, 90f);
+
+        // Rotate the player and player head
         player.rotation = Quaternion.Euler(0, rotationY, 0);
+        playerHead.rotation = Quaternion.Euler(rotationX, rotationY, 0);
     }
 }
