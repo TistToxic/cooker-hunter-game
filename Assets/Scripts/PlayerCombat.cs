@@ -53,7 +53,6 @@ public class PlayerCombat : MonoBehaviour
             attackCoolDownTimer = 0f;
             canAttack = true;
         }
-        Debug.Log(selectedWeaponIndex);
 
         // Attack action
         if (canAttack && Input.GetMouseButtonDown(0))

@@ -5,11 +5,13 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
     public Transform cameraTransform;
-    [SerializeField] public float health = 25, hSpeed = 50, vSpeed = 100;
+    [SerializeField] public float hSpeed = 50, vSpeed = 100;
 
     private Vector3 newVelocity = new Vector3(0f, 0f, 0f);
-    private float iFrameTime = 1f, iFrameTimer = 0f, dodgeMultiplier = 1.5f;
-    private bool isTouchingFloor = false, isInvincible = false;
+    private float dodgeMultiplier = 1.5f;
+    private bool isTouchingFloor = false;
+    public bool canDodge = true;
+    private PlayerHealth healthScript;
 
     // Check if player is touching the floor
     void OnCollisionEnter(Collision collision)
@@ -31,25 +33,14 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        healthScript = GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // I-frame timer
-        if (isInvincible)
-        {
-            iFrameTimer += Time.deltaTime;
-            if (iFrameTimer >= iFrameTime)
-            {
-                iFrameTimer = 0f;
-                isInvincible = false;
-            }
-        }
-
-
         // Get horizontal direction of player
-        if (!isInvincible)
+        if (canDodge)
         {
             newVelocity.x = Convert.ToSingle(Input.GetKey(KeyCode.D)) - Convert.ToSingle(Input.GetKey(KeyCode.A));
             newVelocity.z = Convert.ToSingle(Input.GetKey(KeyCode.W)) - Convert.ToSingle(Input.GetKey(KeyCode.S));
@@ -64,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         newVelocity = transform.rotation * newVelocity; // Rotate the new velocity 
         
         // Apply horizontal velocity
-        if (isTouchingFloor && !isInvincible)
+        if (isTouchingFloor && canDodge)
         {
             // Dodge
             if (Input.GetKey(KeyCode.Space)) 
@@ -75,7 +66,8 @@ public class PlayerMovement : MonoBehaviour
                     newVelocity = (new Vector3(cameraTransform.position.x, 0, cameraTransform.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized * hSpeed;
                 }
                 newVelocity *= dodgeMultiplier;
-                isInvincible = true;
+                healthScript.isInvincible = true;
+                canDodge = false;
             }
             rb.linearVelocity = newVelocity;
         }
