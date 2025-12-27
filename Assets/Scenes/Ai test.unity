@@ -376,6 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb74ab097213b304282ad241d3981811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBehavior
+  health: 100
   enemyDatabase: {fileID: 0}
   enemyID: 0
   targetMask:
@@ -2670,8 +2671,8 @@ Transform:
   m_GameObject: {fileID: 1021729751}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.5809, y: -0.3094, z: -4.893}
-  m_LocalScale: {x: 3.2897878, y: 1, z: 3.069969}
+  m_LocalPosition: {x: 13.581, y: -0.3094, z: -4.893}
+  m_LocalScale: {x: 6.7990046, y: 1.5355, z: 8.305187}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 527789039}
@@ -2947,6 +2948,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb74ab097213b304282ad241d3981811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBehavior
+  health: 100
   enemyDatabase: {fileID: 0}
   enemyID: 0
   targetMask:
@@ -3999,6 +4001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0791221333e3edd488a0fc2e539be08a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  staminaScript: {fileID: 2083999292}
   weapons:
   - weaponName: 
     damage: 25
@@ -4032,7 +4035,7 @@ MonoBehaviour:
     angle: 60
     length: 2
     width: 1
-  attackOrigin: {fileID: 0}
+  attackOrigin: {fileID: 2083999289}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -4058,9 +4061,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   cameraTransform: {fileID: 955505261}
-  health: 25
+  health: 0
   hSpeed: 10
-  sprintSpeed: 50
+  sprintSpeed: 20
   speed: 0
   newVelocity: {x: 0, y: 0, z: 0}
   sprintStaminaConsumeRate: 5
@@ -4235,7 +4238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034739cb59405ca4bb7041a9e8d07d5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stamina
-  movementScript: {fileID: 0}
+  movementScript: {fileID: 2083999284}
   maxStamina: 100
   stamina: 100
   staminaRechargeRate: 5

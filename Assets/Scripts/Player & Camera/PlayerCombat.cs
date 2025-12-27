@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+    public Stamina staminaScript;
+
     public enum HitboxType
     {
         AOE,        // Sphere
@@ -281,10 +283,11 @@ public class PlayerCombat : MonoBehaviour
 
     void HandleAttackInput()
     {
-        if (canAttack && Input.GetKeyDown(attackKey))
+        if (canAttack && Input.GetKeyDown(attackKey) && staminaScript.stamina - 15 < 100 && staminaScript.stamina > 15)
         {
             canAttack = false;
             PerformAttack(weapons[selectedWeaponIndex]);
+            staminaScript.consumeStamina(15);
         }
     }
 

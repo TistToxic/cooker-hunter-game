@@ -15,7 +15,7 @@ public class Stamina : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(stamina);
+        Debug.Log(stamina);
         // Stamina recharge
         if (stamina < maxStamina && (!Input.GetKey(KeyCode.LeftShift) || movementScript.newVelocity.magnitude == 0f))
         {

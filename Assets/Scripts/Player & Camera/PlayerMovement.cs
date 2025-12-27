@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(health);
+        //Debug.Log(health);
         // Death
         if (health <= 0f)
         {
