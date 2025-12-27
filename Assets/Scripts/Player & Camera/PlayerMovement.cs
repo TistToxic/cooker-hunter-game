@@ -1,37 +1,26 @@
 using UnityEngine;
-using System;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
     public Transform cameraTransform;
-    [SerializeField] public float hSpeed = 25, sprintSpeed = 50, speed;
+    [SerializeField] public float health = 25, hSpeed = 50, sprintSpeed = 100, speed;
 
     public Vector3 newVelocity = new Vector3(0f, 0f, 0f);
-    private float dodgeMultiplier = 1.5f;
-    private bool isTouchingFloor = false;
-    public bool canDodge = true;
-    private Health healthScript;
+    private float iFrameTime = 1f, iFrameTimer = 0f, dodgeMultiplier = 1.5f;
+    private bool isTouchingFloor = false, isInvincible = false, canDodge = true;
     private Stamina staminaScript;
+    public int sprintStaminaConsumeRate = 5;
     private float staminaConsumeTimer = 0f;
-    [SerializeField] private int sprintStaminaConsumeRate = 5;
 
     // Check if player is touching the floor
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Floor")){
-            isTouchingFloor = true;
-        }
-    }
-
-    // Testing damage
-    void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Floor"))
         {
-            healthScript.health -= 25;
-            healthScript.isInvincible = true;
+            isTouchingFloor = true;
         }
     }
 
@@ -47,24 +36,31 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        healthScript = GetComponent<Health>();
         staminaScript = GetComponent<Stamina>();
         speed = hSpeed;
     }
 
+    // Update is called once per frame
     void Update()
     {
+        Debug.Log(health);
         // Death
-        if (healthScript.isDead)
+        if (health <= 0f)
         {
             Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Death");
         }
 
         // I-frame timer
-        if (!healthScript.isInvincible)
+        if (isInvincible)
         {
-            canDodge = true;
+            iFrameTimer += Time.deltaTime;
+            if (iFrameTimer >= iFrameTime)
+            {
+                iFrameTimer = 0f;
+                isInvincible = false;
+                canDodge = true;
+            }
         }
 
         // Get horizontal direction of player
@@ -97,12 +93,12 @@ public class PlayerMovement : MonoBehaviour
         }
         newVelocity *= speed;
         newVelocity = transform.rotation * newVelocity; // Rotate the new velocity 
-        
+
         // Apply horizontal velocity
-        if (isTouchingFloor && canDodge)
+        if (isTouchingFloor && !isInvincible)
         {
             // Dodge
-            if (Input.GetKey(KeyCode.Space) && staminaScript.stamina >= 25) 
+            if (Input.GetKey(KeyCode.Space) && staminaScript.stamina >= 25)
             {
                 // Dodge back (without direction)
                 if (newVelocity.magnitude == 0f)
@@ -110,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
                     newVelocity = (new Vector3(cameraTransform.position.x, 0, cameraTransform.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized * hSpeed;
                 }
                 newVelocity *= dodgeMultiplier;
-                healthScript.isInvincible = true;
+                isInvincible = true;
                 canDodge = false;
                 staminaScript.consumeStamina(25);
             }

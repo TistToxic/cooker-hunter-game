@@ -4,6 +4,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBehavior : MonoBehaviour
 {
+    public float health = 100f;
+
     [Header("Enemy Database")]
     public EnemyDatabaseSO enemyDatabase;
     public int enemyID;
@@ -14,6 +16,8 @@ public class EnemyBehavior : MonoBehaviour
     public string playerTag = "Player";
     public float detectionDelay = 0.1f;
     public float raycastHeightOffset = 0.5f;
+
+    public bool isDead = false;
     
     [Header("Debug")]
     public bool showDebugLogs = false;
@@ -81,6 +85,13 @@ public class EnemyBehavior : MonoBehaviour
     
     void Update()
     {
+        // Death
+        if (health <= 0)
+        {
+            isDead = true;
+            Destroy(gameObject);
+        }
+
         if (PlayerInFOV && CurrentTarget != null)
         {
             float distanceToTarget = Vector3.Distance(transform.position, CurrentTarget.position);
@@ -244,5 +255,10 @@ public class EnemyBehavior : MonoBehaviour
     Vector3 GetDirectionFromAngle(float angleInDegrees)
     {
         return Quaternion.Euler(0, angleInDegrees, 0) * transform.forward;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
     }
 }

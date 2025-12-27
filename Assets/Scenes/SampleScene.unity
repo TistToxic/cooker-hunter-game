@@ -814,6 +814,7 @@ MonoBehaviour:
   playerTag: Player
   detectionDelay: 0.1
   raycastHeightOffset: 0.5
+  isDead: 0
   showDebugLogs: 1
   showDebugGizmos: 1
 --- !u!1 &832575517
@@ -1002,6 +1003,7 @@ MonoBehaviour:
   playerTag: Player
   detectionDelay: 0.1
   raycastHeightOffset: 0.5
+  isDead: 0
   showDebugLogs: 0
   showDebugGizmos: 1
 --- !u!195 &942205995
@@ -1186,11 +1188,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   cameraTransform: {fileID: 330585546}
+  health: 25
   hSpeed: 15
   sprintSpeed: 25
   speed: 0
   newVelocity: {x: 0, y: 0, z: 0}
-  canDodge: 1
   sprintStaminaConsumeRate: 5
 --- !u!114 &1432901396
 MonoBehaviour:
@@ -1204,14 +1206,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0791221333e3edd488a0fc2e539be08a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  weapon0Cooldown: 1
-  weapon0Damage: 25
-  weapon1Cooldown: 1
-  weapon1Damage: 25
-  weapon2Cooldown: 1.5
-  weapon2Damage: 50
-  weapon3Cooldown: 0.5
-  weapon3Damage: 100
+  weapons:
+  - weaponName: 
+    damage: 25
+    cooldown: 1
+    hitboxType: 0
+    radius: 2
+    angle: 60
+    length: 2
+    width: 1
+  - weaponName: 
+    damage: 25
+    cooldown: 1
+    hitboxType: 0
+    radius: 2
+    angle: 60
+    length: 2
+    width: 1
+  - weaponName: 
+    damage: 25
+    cooldown: 1
+    hitboxType: 0
+    radius: 2
+    angle: 60
+    length: 2
+    width: 1
+  - weaponName: 
+    damage: 25
+    cooldown: 1
+    hitboxType: 0
+    radius: 2
+    angle: 60
+    length: 2
+    width: 1
+  attackOrigin: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackKey: 323
+  showDebugLogs: 1
+  showDebugGizmos: 1
+  attackLineMaterial: {fileID: 0}
+  attackLineDuration: 0.15
+  attackColor: {r: 1, g: 0, b: 0, a: 1}
+  showRangeIndicator: 1
+  rangeColor: {r: 0, g: 1, b: 0, a: 0.3}
+  rangeIndicatorMaterial: {fileID: 0}
 --- !u!114 &1432901397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,7 +1259,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1432901389}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84ebd4d374eb0ac4fbca393985dc6108, type: 3}
   m_Name: 
