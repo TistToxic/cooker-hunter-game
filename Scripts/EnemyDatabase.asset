@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb73c569b9dc9e846b504b2ff294633b, type: 3}
+  m_Name: EnemyDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDatabaseSO
+  enemiesData:
+  - <Name>k__BackingField: Gooner
+    <ID>k__BackingField: 1
+    <Prefab>k__BackingField: {fileID: 0}
+    <Health>k__BackingField: 100
+    <AttackDamage>k__BackingField: 0
+    <AttackRange>k__BackingField: 0
+    <AttackCooldown>k__BackingField: 0
+    <ViewAngle>k__BackingField: 98
+    <ViewRadius>k__BackingField: 10
+    <LoseTargetTime>k__BackingField: 3
+    <PatrolRadius>k__BackingField: 5
+    <PatrolWaitTime>k__BackingField: 2
+    <IsCommander>k__BackingField: 0
+    <CommandedEnemyIDs>k__BackingField: 
+    <IsRangedCommander>k__BackingField: 0
+    <RangedData>k__BackingField:
+      <ProjectilePrefab>k__BackingField: {fileID: 0}
+      <ProjectileRange>k__BackingField: 0
+      <ProjectileDamage>k__BackingField: 0
+      <Accuracy>k__BackingField: 0
+      <ProjectileCooldown>k__BackingField: 0

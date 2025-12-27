@@ -3,29 +3,82 @@ using System;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody rb;
+    private Rigidbody rb;
+    public Transform cameraTransform;
+    [SerializeField] public float health = 25, hSpeed = 50, vSpeed = 100;
 
-    [SerializeField]
-    private float forceMagnitude;
+    private Vector3 newVelocity = new Vector3(0f, 0f, 0f);
+    private float iFrameTime = 1f, iFrameTimer = 0f, dodgeMultiplier = 1.5f;
+    private bool isTouchingFloor = false, isInvincible = false;
 
-    private Vector3 netForce;
+    // Check if player is touching the floor
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Floor")){
+            isTouchingFloor = true;
+        }
+    }
+
+    // Check if player has stopped touching the floor
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            isTouchingFloor = false;
+        }
+    }
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        // Get direction of player
-        netForce.x = Convert.ToSingle(Input.GetKey(KeyCode.D)) - Convert.ToSingle(Input.GetKey(KeyCode.A));
-        netForce.y = 0.0f;
-        netForce.z = Convert.ToSingle(Input.GetKey(KeyCode.W)) - Convert.ToSingle(Input.GetKey(KeyCode.S));
-
-        // Normalize net force
-        if (netForce.magnitude > 0)
+        // I-frame timer
+        if (isInvincible)
         {
-            netForce /= netForce.magnitude; // <--- This might not be the magnitude we want, so we normalize the vector then scale it by the magnitude we want
+            iFrameTimer += Time.deltaTime;
+            if (iFrameTimer >= iFrameTime)
+            {
+                iFrameTimer = 0f;
+                isInvincible = false;
+            }
         }
-        netForce *= forceMagnitude * Time.fixedDeltaTime;
 
-        // Apply force to player
-        rb.AddForce(netForce);
+
+        // Get horizontal direction of player
+        if (!isInvincible)
+        {
+            newVelocity.x = Convert.ToSingle(Input.GetKey(KeyCode.D)) - Convert.ToSingle(Input.GetKey(KeyCode.A));
+            newVelocity.z = Convert.ToSingle(Input.GetKey(KeyCode.W)) - Convert.ToSingle(Input.GetKey(KeyCode.S));
+        }
+
+        // Normalize velocity 
+        if (newVelocity.magnitude > 0f)
+        {
+            newVelocity.Normalize();
+        }
+        newVelocity *= hSpeed;
+        newVelocity = transform.rotation * newVelocity; // Rotate the new velocity 
+        
+        // Apply horizontal velocity
+        if (isTouchingFloor && !isInvincible)
+        {
+            // Dodge
+            if (Input.GetKey(KeyCode.Space)) 
+            {
+                // Dodge back (without direction)
+                if (newVelocity.magnitude == 0f)
+                {
+                    newVelocity = (new Vector3(cameraTransform.position.x, 0, cameraTransform.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized * hSpeed;
+                }
+                newVelocity *= dodgeMultiplier;
+                isInvincible = true;
+            }
+            rb.linearVelocity = newVelocity;
+        }
+
     }
 }

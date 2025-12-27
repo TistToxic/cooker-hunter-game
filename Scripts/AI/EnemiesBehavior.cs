@@ -39,7 +39,7 @@ public class EnemyFieldOfView : MonoBehaviour
     private float lastSeenTime;
     private bool wasInFOV;
     private bool hasIssuedCommand = false;
-    private Transform commandedTarget; // Target set by commander
+    private Transform commandedTarget; 
     private float commandedTargetTime;
     private Vector3 lastSeenPosition;
     
@@ -53,19 +53,19 @@ public class EnemyFieldOfView : MonoBehaviour
     
 void Update()
 {
-    // Commander issues orders when player detected
+   
     if (isCommander && PlayerInFOV && CurrentTarget != null)
     {
-        CommandNearbyEnemies(); // Keep commanding every frame while player is in FOV
+        CommandNearbyEnemies(); 
     }
     
-    // Reset command flag when target is lost
+
     if (isCommander && CurrentTarget == null)
     {
         hasIssuedCommand = false;
     }
     
-    // Prioritize commanded target over own detection
+   
     Transform targetToChase = commandedTarget != null ? commandedTarget : CurrentTarget;
     bool hasValidTarget = (PlayerInFOV || commandedTarget != null) && targetToChase != null;
     
@@ -92,12 +92,11 @@ void Update()
         }
     }
     
-    // Update commanded target time while commander still sees player
+   
     if (commandedTarget != null)
     {
         bool commanderStillSeesPlayer = false;
         
-        // Search for commanders in the scene
         EnemyFieldOfView[] allEnemies = Object.FindObjectsOfType<EnemyFieldOfView>();
         foreach (EnemyFieldOfView enemy in allEnemies)
         {
@@ -108,7 +107,7 @@ void Update()
                     if (commanded == this && enemy.PlayerInFOV)
                     {
                         commanderStillSeesPlayer = true;
-                        commandedTargetTime = Time.time; // Refresh timer
+                        commandedTargetTime = Time.time; 
                         break;
                     }
                 }
@@ -151,7 +150,7 @@ void CommandNearbyEnemies()
     }
 }
     
-    // Public method for commanders to order this enemy
+  
     public void ReceiveCommand(Transform target)
     {
         commandedTarget = target;
@@ -246,13 +245,13 @@ if (!Physics.Raycast(rayOrigin, rayDirection, rayDistance, obstructionMask))
         return Time.time - lastSeenTime;
     }
     
-   
+   //for debug purpose
     void OnDrawGizmos()
     {
         if (!showDebugGizmos) return;
         
         
-        // Draw FOV cone
+
         Vector3 viewAngleA = GetDirectionFromAngle(-viewAngle / 2f);
         Vector3 viewAngleB = GetDirectionFromAngle(viewAngle / 2f);
         
@@ -272,7 +271,6 @@ if (!Physics.Raycast(rayOrigin, rayDirection, rayDistance, obstructionMask))
                            CurrentTarget.position + Vector3.up * raycastHeightOffset);
         }
         
-        // Draw line to commanded target (purple)
         if (commandedTarget != null)
         {
             Gizmos.color = Color.magenta;
