@@ -379,12 +379,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56b187a5c4acdf44790b257fdb781fac, type: 3}
+  m_Script: {fileID: 11500000, guid: fcfce2c2a47dadc468b2b91dd0682487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   player: {fileID: 1432901394}
   playerHead: {fileID: 292284954}
+  playerRenderer: {fileID: 779752207}
+  maxDistance: 5
+  minDistance: 0.5
+  smoothSpeed: 10
   mouseSensitivity: 300
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  collisionPadding: 0.2
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,6 +811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb74ab097213b304282ad241d3981811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBehavior
+  health: 100
   enemyDatabase: {fileID: 11400000, guid: 9d3bc4fbc3f35b0439d7bbb51b96941f, type: 2}
   enemyID: 0
   targetMask:
@@ -992,6 +1001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb74ab097213b304282ad241d3981811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBehavior
+  health: 100
   enemyDatabase: {fileID: 0}
   enemyID: 1
   targetMask:
@@ -1127,7 +1137,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 2070cbd1382dd8d4487d38aa0a03d621, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1184,13 +1194,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1432901389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 494c5bde89e51d84bbce9744deb8aa55, type: 3}
+  m_Script: {fileID: 11500000, guid: 74976f008b1ff764e8c584632cce7ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   cameraTransform: {fileID: 330585546}
   health: 25
-  hSpeed: 15
-  sprintSpeed: 25
+  hSpeed: 50
+  sprintSpeed: 100
   speed: 0
   newVelocity: {x: 0, y: 0, z: 0}
   sprintStaminaConsumeRate: 5
@@ -1203,9 +1213,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1432901389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0791221333e3edd488a0fc2e539be08a, type: 3}
+  m_Script: {fileID: 11500000, guid: d6550fd639d463448a11accd4eecac82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  maxHealth: 100
+  damagePerHit: 10
+  currentHealth: 0
+  damageRadius: 2.5
+  timeBeforeDamage: 1.5
+  enemyTag: Enemy
+  gracePeriod: 0.2
+  healthText: {fileID: 0}
+  safeColor: {r: 0, g: 1, b: 0, a: 1}
+  dangerColor: {r: 1, g: 0, b: 0, a: 1}
+  showDebugLogs: 1
+--- !u!114 &1432901397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432901389}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b316a90db0a7684c957e570538032f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  staminaScript: {fileID: 1432901398}
   weapons:
   - weaponName: 
     damage: 25
@@ -1239,7 +1273,7 @@ MonoBehaviour:
     angle: 60
     length: 2
     width: 1
-  attackOrigin: {fileID: 0}
+  attackOrigin: {fileID: 1432901394}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -1252,23 +1286,6 @@ MonoBehaviour:
   showRangeIndicator: 1
   rangeColor: {r: 0, g: 1, b: 0, a: 0.3}
   rangeIndicatorMaterial: {fileID: 0}
---- !u!114 &1432901397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432901389}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84ebd4d374eb0ac4fbca393985dc6108, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  maxHealth: 100
-  health: 100
-  isInvincible: 0
-  isDead: 0
-  iFrameTimeSec: 0.5
 --- !u!114 &1432901398
 MonoBehaviour:
   m_ObjectHideFlags: 0

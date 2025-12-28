@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody rb;
     public Transform cameraTransform;
-    [SerializeField] public float health = 25, hSpeed = 50, sprintSpeed = 100, speed;
+    public float health = 25, hSpeed = 50, sprintSpeed = 100, speed;
 
     public Vector3 newVelocity = new Vector3(0f, 0f, 0f);
     private float iFrameTime = 1f, iFrameTimer = 0f, dodgeMultiplier = 1.5f;
@@ -40,45 +40,64 @@ public class PlayerMovement : MonoBehaviour
         speed = hSpeed;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //Debug.Log(health);
         // Death
+
         if (health <= 0f)
+
         {
+
             Cursor.lockState = CursorLockMode.None;
+
             SceneManager.LoadScene("Death");
+
         }
+
+
 
         // I-frame timer
+
         if (isInvincible)
+
         {
+
             iFrameTimer += Time.deltaTime;
+
             if (iFrameTimer >= iFrameTime)
+
             {
+
                 iFrameTimer = 0f;
+
                 isInvincible = false;
+
                 canDodge = true;
+
             }
+
         }
 
-        // Get horizontal direction of player
+        // 1. Get Input (Cleaner way than Convert.ToSingle)
+        float moveX = Input.GetAxisRaw("Horizontal"); // A/D
+        float moveZ = Input.GetAxisRaw("Vertical");   // W/S
+
         if (canDodge)
         {
-            newVelocity.x = Convert.ToSingle(Input.GetKey(KeyCode.D)) - Convert.ToSingle(Input.GetKey(KeyCode.A));
-            newVelocity.z = Convert.ToSingle(Input.GetKey(KeyCode.W)) - Convert.ToSingle(Input.GetKey(KeyCode.S));
+            // Calculate direction relative to the player's current facing direction
+            Vector3 moveDir = new Vector3(moveX, 0, moveZ).normalized;
+            newVelocity = transform.TransformDirection(moveDir) * speed;
         }
 
-        // Sprinting
-        if (staminaScript.stamina > 0 && Input.GetKey(KeyCode.LeftShift) && newVelocity.magnitude > 0)
+        // 2. Handle Sprinting
+        if (staminaScript.stamina > 0 && Input.GetKey(KeyCode.LeftShift) && newVelocity.sqrMagnitude > 0)
         {
             speed = sprintSpeed;
             staminaConsumeTimer += Time.deltaTime;
             if (staminaConsumeTimer > 1f)
             {
                 staminaScript.stamina -= sprintStaminaConsumeRate;
-                staminaConsumeTimer -= 1f;
+                staminaConsumeTimer = 0f;
             }
         }
         else
@@ -86,32 +105,25 @@ public class PlayerMovement : MonoBehaviour
             speed = hSpeed;
         }
 
-        // Normalize velocity 
-        if (newVelocity.magnitude > 0f)
-        {
-            newVelocity.Normalize();
-        }
-        newVelocity *= speed;
-        newVelocity = transform.rotation * newVelocity; // Rotate the new velocity 
-
-        // Apply horizontal velocity
+        // 3. Apply Movement
         if (isTouchingFloor && !isInvincible)
         {
-            // Dodge
-            if (Input.GetKey(KeyCode.Space) && staminaScript.stamina >= 25)
+            // Dodge Logic
+            if (Input.GetKeyDown(KeyCode.Space) && staminaScript.stamina >= 25)
             {
-                // Dodge back (without direction)
-                if (newVelocity.magnitude == 0f)
+                if (newVelocity.sqrMagnitude == 0f)
                 {
-                    newVelocity = (new Vector3(cameraTransform.position.x, 0, cameraTransform.position.z) - new Vector3(transform.position.x, 0, transform.position.z)).normalized * hSpeed;
+                    // Dash backward relative to where camera is facing
+                    newVelocity = -transform.forward * hSpeed;
                 }
                 newVelocity *= dodgeMultiplier;
                 isInvincible = true;
                 canDodge = false;
                 staminaScript.consumeStamina(25);
             }
-            rb.linearVelocity = newVelocity;
-        }
 
+            // Apply to Rigidbody (Keep Y velocity so gravity works!)
+            rb.linearVelocity = new Vector3(newVelocity.x, rb.linearVelocity.y, newVelocity.z);
+        }
     }
 }

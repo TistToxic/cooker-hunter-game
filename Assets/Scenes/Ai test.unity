@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 70166732}
   - component: {fileID: 70166731}
   - component: {fileID: 70166733}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Gooner
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -432,11 +432,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ebd4d374eb0ac4fbca393985dc6108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 100
-  health: 100
-  isInvincible: 0
-  isDead: 0
-  iFrameTimeSec: 0.5
 --- !u!1 &110744591
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +444,7 @@ GameObject:
   - component: {fileID: 110744595}
   - component: {fileID: 110744594}
   - component: {fileID: 110744593}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -791,7 +786,7 @@ GameObject:
   - component: {fileID: 205010765}
   - component: {fileID: 205010764}
   - component: {fileID: 205010763}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -903,7 +898,7 @@ GameObject:
   - component: {fileID: 268700971}
   - component: {fileID: 268700970}
   - component: {fileID: 268700969}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1047,7 +1042,7 @@ MonoBehaviour:
     m_Bits: 8
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   playerTag: Player
   detectionDelay: 0.1
   raycastHeightOffset: 1
@@ -1444,7 +1439,7 @@ MonoBehaviour:
     m_Bits: 8
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   playerTag: Player
   detectionDelay: 0.1
   raycastHeightOffset: 1
@@ -1733,7 +1728,7 @@ GameObject:
   - component: {fileID: 646282321}
   - component: {fileID: 646282320}
   - component: {fileID: 646282319}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1924,7 +1919,7 @@ GameObject:
   - component: {fileID: 802297636}
   - component: {fileID: 802297635}
   - component: {fileID: 802297634}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2037,7 +2032,7 @@ GameObject:
   - component: {fileID: 877883157}
   - component: {fileID: 877883156}
   - component: {fileID: 877883155}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2310,12 +2305,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 955505260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56b187a5c4acdf44790b257fdb781fac, type: 3}
+  m_Script: {fileID: 11500000, guid: fcfce2c2a47dadc468b2b91dd0682487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   player: {fileID: 2083999289}
   playerHead: {fileID: 924133797}
+  playerRenderer: {fileID: 1129360753}
+  maxDistance: 5
+  minDistance: 0.5
+  smoothSpeed: 10
   mouseSensitivity: 300
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 1
+  collisionPadding: 0.2
 --- !u!114 &955505263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2431,7 +2434,7 @@ GameObject:
   - component: {fileID: 982394710}
   - component: {fileID: 982394709}
   - component: {fileID: 982394708}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2543,7 +2546,7 @@ GameObject:
   - component: {fileID: 1000262405}
   - component: {fileID: 1000262404}
   - component: {fileID: 1000262403}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2655,7 +2658,7 @@ GameObject:
   - component: {fileID: 1021729755}
   - component: {fileID: 1021729754}
   - component: {fileID: 1021729753}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -2768,7 +2771,7 @@ GameObject:
   - component: {fileID: 1029803262}
   - component: {fileID: 1029803261}
   - component: {fileID: 1029803260}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2914,7 +2917,7 @@ GameObject:
   - component: {fileID: 1129360751}
   - component: {fileID: 1129360750}
   - component: {fileID: 1129360755}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Capsule
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -3307,7 +3310,7 @@ GameObject:
   - component: {fileID: 1451753580}
   - component: {fileID: 1451753579}
   - component: {fileID: 1451753578}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3498,7 +3501,7 @@ GameObject:
   - component: {fileID: 1611220269}
   - component: {fileID: 1611220268}
   - component: {fileID: 1611220267}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3752,7 +3755,7 @@ GameObject:
   - component: {fileID: 1788188595}
   - component: {fileID: 1788188594}
   - component: {fileID: 1788188593}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3864,7 +3867,7 @@ GameObject:
   - component: {fileID: 2001092586}
   - component: {fileID: 2001092585}
   - component: {fileID: 2001092584}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3979,7 +3982,6 @@ GameObject:
   - component: {fileID: 2083999285}
   - component: {fileID: 2083999284}
   - component: {fileID: 2083999283}
-  - component: {fileID: 2083999290}
   - component: {fileID: 2083999291}
   - component: {fileID: 2083999292}
   m_Layer: 3
@@ -3998,7 +4000,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2083999282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0791221333e3edd488a0fc2e539be08a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b316a90db0a7684c957e570538032f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   staminaScript: {fileID: 2083999292}
@@ -4046,7 +4048,7 @@ MonoBehaviour:
   attackLineDuration: 0.15
   attackColor: {r: 1, g: 0, b: 0, a: 1}
   showRangeIndicator: 1
-  rangeColor: {r: 0.27171594, g: 0.34176248, b: 0.8113208, a: 1}
+  rangeColor: {r: 0, g: 1, b: 0, a: 0.3}
   rangeIndicatorMaterial: {fileID: 0}
 --- !u!114 &2083999284
 MonoBehaviour:
@@ -4057,13 +4059,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2083999282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 494c5bde89e51d84bbce9744deb8aa55, type: 3}
+  m_Script: {fileID: 11500000, guid: 74976f008b1ff764e8c584632cce7ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   cameraTransform: {fileID: 955505261}
-  health: 0
-  hSpeed: 10
-  sprintSpeed: 20
+  health: 25
+  hSpeed: 50
+  sprintSpeed: 100
   speed: 0
   newVelocity: {x: 0, y: 0, z: 0}
   sprintStaminaConsumeRate: 5
@@ -4183,7 +4185,7 @@ Transform:
   m_GameObject: {fileID: 2083999282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.86, y: 1.08, z: -1.74584}
+  m_LocalPosition: {x: 15.86, y: 1.08, z: -1.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4191,18 +4193,6 @@ Transform:
   - {fileID: 924133797}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2083999290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2083999282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b4c03b6b4aae1d4a8873b6d20bb66d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDebugger
 --- !u!114 &2083999291
 MonoBehaviour:
   m_ObjectHideFlags: 0
